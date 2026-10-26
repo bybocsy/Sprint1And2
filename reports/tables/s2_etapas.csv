@@ -1,0 +1,8 @@
+﻿etapa,linhas_antes,removidas,linhas_depois,motivo
+Leitura dos 3 arquivos,788525,0,788525,Nenhuma linha removida
+Padronização dos textos,788525,0,788525,"Codificação de 2024, acentos, traços, nomes de empresa, chassi"
+Linhas repetidas,788525,59195,729330,Meses exportados 2 ou 3 vezes no arquivo de 2024
+INATIVO = Sim (mantidas),729330,0,729330,Parecem viagens reais de veículos desativados depois
+Pesos impossíveis ou com conta errada,729330,6,729324,"Líquido <= 0, tara = 0 ou bruto - tara != líquido"
+Valores extremos (3 x IQR),729324,2495,726829,Tara extrema para o tipo de caminhão ou carga extrema para o material
+Fora da variável-alvo,726829,16314,710515,Transbordo (lixo já pesado antes) e Outros (grupo misturado e pequeno)

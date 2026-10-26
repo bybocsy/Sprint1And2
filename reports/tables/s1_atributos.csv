@@ -1,0 +1,13 @@
+﻿,tipo,valores_ausentes,valores_distintos
+ATERRO,Categórico (nominal),0,2
+DATA,Data,0,1096
+TRANSPORTADORA,Categórico (nominal),0,100
+MATERIAL,Categórico (nominal),0,21
+ZGL,Categórico (nominal),0,48
+REGIONAL,Categórico (nominal),0,15
+TIPOCAD,Categórico (binário),0,2
+PESO_BRUTO,"Numérico (inteiro, kg)",0,5774
+TARA,"Numérico (inteiro, kg)",0,2301
+PESO_LIQUIDO,"Numérico (inteiro, kg)",0,4139
+CHASSI,Categórico (nominal),0,3
+INATIVO,Categórico (binário),0,2

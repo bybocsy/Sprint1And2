@@ -1,0 +1,10 @@
+﻿,colunas
+Numéricos padronizados,4
+Cíclicos (seno/cosseno),4
+Binário,1
+One-hot de TRANSPORTADORA,19
+One-hot de ZGL,46
+One-hot de REGIONAL,14
+One-hot de ORIGEM,3
+One-hot de CHASSI,3
+One-hot de TIPOCAD,2
