@@ -62,6 +62,10 @@ ROTULO_CURTO = {
 
 SEMENTE = 42
 
+# "Sim" parece cadastro de veículo desativado, não pesagem cancelada.
+# False mantém essas linhas (decisão da Seção 3.2 do relatório).
+REMOVER_INATIVOS = False
+
 CORES = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4",
          "#008300", "#6250d6", "#e34948"]
 COR_CLASSE = dict(zip(CLASSES_ALVO, CORES))

@@ -1,0 +1,10 @@
+{
+  "melhor_pela_cv": "Rede neural",
+  "n_treino": 497361,
+  "n_teste": 213154,
+  "n_atributos": 96,
+  "n_folds": 5,
+  "amostra_busca": 80000,
+  "classe_majoritaria": "Domiciliar",
+  "tempo_total_s": 192.6
+}
