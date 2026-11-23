@@ -112,6 +112,23 @@ ATRIBUTOS_CATEGORICOS = ["TRANSPORTADORA", "ZGL", "REGIONAL", "ORIGEM",
 ATRIBUTOS_BINARIOS = ["FIM_DE_SEMANA"]
 ALVO = "MATERIAL_GRUPO"
 
+# As duas tarefas usam as MESMAS linhas e a mesma divisão treino/teste;
+# muda só o alvo e o que pode entrar como atributo.
+# Na regressão, PESO_BRUTO e CARGA_POR_TARA ficam de fora porque são
+# calculados a partir do próprio alvo (bruto - tara = líquido).
+TAREFAS = {
+    "classificacao": {
+        "alvo": "MATERIAL_GRUPO",
+        "numericos": ATRIBUTOS_NUMERICOS,
+        "categoricos": ATRIBUTOS_CATEGORICOS,
+    },
+    "regressao": {
+        "alvo": "PESO_LIQUIDO",
+        "numericos": ["TARA", "DIA_MES"],
+        "categoricos": ATRIBUTOS_CATEGORICOS + ["MATERIAL_GRUPO"],
+    },
+}
+
 
 def agrupar_raros(serie, minimo=0.005, rotulo="OUTRAS"):
     freq = serie.value_counts(normalize=True)
@@ -137,16 +154,17 @@ def dividir_treino_teste(df, prop_teste=0.3, semente=SEMENTE):
     return treino.sample(frac=1, random_state=semente), teste
 
 
-def codificar(df, categorias=None):
+def codificar(df, categorias=None, tarefa="classificacao"):
 
-    out = df[ATRIBUTOS_NUMERICOS + ATRIBUTOS_BINARIOS].astype(float).copy()
+    spec = TAREFAS[tarefa]
+    out = df[spec["numericos"] + ATRIBUTOS_BINARIOS].astype(float).copy()
     for col, periodo in ATRIBUTOS_CICLICOS.items():
         angulo = 2 * np.pi * df[col] / periodo
         out[f"{col}_SEN"] = np.sin(angulo)
         out[f"{col}_COS"] = np.cos(angulo)
 
     if categorias is None:
-        categorias = {c: sorted(df[c].unique()) for c in ATRIBUTOS_CATEGORICOS}
+        categorias = {c: sorted(df[c].unique()) for c in spec["categoricos"]}
     for col, valores in categorias.items():
         cat = pd.Categorical(df[col], categories=valores)
         dummies = pd.get_dummies(cat, prefix=col, dtype="uint8")

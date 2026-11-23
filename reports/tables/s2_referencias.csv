@@ -1,0 +1,3 @@
+﻿tarefa,referencia,metrica_1,valor_1,metrica_2,valor_2
+Classificação,Sempre 'Domiciliar',Acurácia,0.3424,F1 macro,0.085
+Regressão,Sempre 7.97 t (média do treino),MAE (t),3.8481,RMSE (t),5.018

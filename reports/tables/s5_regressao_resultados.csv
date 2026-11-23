@@ -1,0 +1,9 @@
+﻿modelo,familia,MAE,RMSE,R2,MAE_cv,treino_s,escolhido
+Referência: média geral,Referência,3.8481,5.018,-0.0,,0.0,
+Referência: média do tipo de resíduo,Referência,2.9266,3.8732,0.4042,,0.0,
+Regressão linear (Ridge),Individual,2.111,2.8939,0.6674,2.117,9.7436,{'alpha': 0.1}
+Árvore de decisão,Individual,1.6195,2.2897,0.7918,1.7319,6.3114,{'max_depth': None}
+Rede neural,Individual,1.6824,2.3482,0.781,1.803,31.9455,"{'hidden_layer_sizes': (128,)}"
+Random Forest,Homogêneo,1.5788,2.212,0.8057,1.6709,61.5073,"{'max_features': 0.3, 'min_samples_leaf': 10}"
+Gradient Boosting,Homogêneo,1.6127,2.2451,0.7998,1.6744,54.7922,"{'learning_rate': 0.05, 'max_leaf_nodes': 127}"
+Média (árvore + rede + GB),Heterogêneo,1.6085,2.2473,0.7994,,93.0492,
