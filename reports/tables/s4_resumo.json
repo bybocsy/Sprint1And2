@@ -1,0 +1,13 @@
+{
+  "melhor_geral_no_teste": "Gradient Boosting",
+  "melhor_por_familia_no_teste": {
+    "Individual": "Árvore de decisão",
+    "Homogêneo": "Gradient Boosting",
+    "Heterogêneo": "Stacking (RF + Gradient Boosting + rede)"
+  },
+  "folds_busca": 5,
+  "amostra_busca": 80000,
+  "folds_stacking": 5,
+  "empilhou_comites": true,
+  "tempo_total_s": 4079.2
+}

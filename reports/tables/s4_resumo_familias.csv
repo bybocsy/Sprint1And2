@@ -1,0 +1,4 @@
+﻿familia,melhor_f1_macro,media_f1_macro,modelos,melhor_modelo
+Individual,0.8991126759267939,0.8023036596990011,5,Árvore de decisão
+Homogêneo,0.9176727309602999,0.9035899290528459,5,Gradient Boosting
+Heterogêneo,0.9147304361063271,0.8954048418753938,6,Stacking (RF + Gradient Boosting + rede)

@@ -1,0 +1,15 @@
+﻿modelo,params,f1_macro_cv,f1_macro_cv_std,rank,folds,linhas_busca
+Bagging de árvores,{},0.86385640387101,0.0021740155150502065,1,5,80000
+Random Forest,"{""max_features"": ""sqrt"", ""min_samples_leaf"": 10}",0.8694079395532975,0.0019565039022976525,3,5,80000
+Random Forest,"{""max_features"": ""sqrt"", ""min_samples_leaf"": 30}",0.8477017874667512,0.0015909942213994414,4,5,80000
+Random Forest,"{""max_features"": 0.3, ""min_samples_leaf"": 10}",0.8981020363009458,0.0018808917800212821,1,5,80000
+Random Forest,"{""max_features"": 0.3, ""min_samples_leaf"": 30}",0.8778043218901097,0.0026997939032860512,2,5,80000
+AdaBoost,"{""estimator__max_depth"": 4, ""learning_rate"": 0.5}",0.8937632697267592,0.003156618416437076,2,5,80000
+AdaBoost,"{""estimator__max_depth"": 4, ""learning_rate"": 1.0}",0.8530807858153849,0.01048893953859478,4,5,80000
+AdaBoost,"{""estimator__max_depth"": 8, ""learning_rate"": 0.5}",0.9004543251449938,0.005222471404068244,1,5,80000
+AdaBoost,"{""estimator__max_depth"": 8, ""learning_rate"": 1.0}",0.8924556112403659,0.006542186586972651,3,5,80000
+Gradient Boosting,"{""learning_rate"": 0.05, ""max_leaf_nodes"": 31}",0.9006645528290083,0.0025984656824515418,4,5,80000
+Gradient Boosting,"{""learning_rate"": 0.05, ""max_leaf_nodes"": 127}",0.9122747685383766,0.004152473269960877,2,5,80000
+Gradient Boosting,"{""learning_rate"": 0.1, ""max_leaf_nodes"": 31}",0.9028423414007589,0.003403851937421258,3,5,80000
+Gradient Boosting,"{""learning_rate"": 0.1, ""max_leaf_nodes"": 127}",0.9137736884275796,0.004844409528570118,1,5,80000
+Bagging de redes neurais,{},0.9075929381117639,0.0017123303407871402,1,5,80000
