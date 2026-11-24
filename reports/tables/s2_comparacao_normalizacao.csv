@@ -1,0 +1,4 @@
+﻿tecnica,minimo,q1,q3,maximo,largura_50pct_central
+Min-max: (x - min) / (max - min),0.0,0.095,0.242,1.0,0.146
+Z-score: (x - media) / desvio,-1.586,-0.747,0.539,7.204,1.286
+Robusta: (x - mediana) / IQR,-1.093,-0.441,0.559,5.74,1.0

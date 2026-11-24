@@ -1,0 +1,3 @@
+﻿tarefa,medida,melhor_modelo,erro_referencia,erro_melhor,reducao
+Classificação,Taxa de erro (1 - acurácia),Gradient Boosting,0.6576,0.0417,0.9366
+Regressão,MAE (t),Random Forest,3.8481,1.5788,0.5897

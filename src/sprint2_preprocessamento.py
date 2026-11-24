@@ -188,7 +188,79 @@ def main():
     assert not Z_tr.isna().any().any() and not Z_te.isna().any().any()
     assert list(Z_tr.columns) == list(Z_te.columns)
     assert np.allclose(Z_tr[pp.ATRIBUTOS_NUMERICOS].mean(), 0, atol=1e-9)
+
+    print("\n[5] Regressão: mesmas linhas, alvo = peso líquido (t)")
+    salvar_regressao(treino, teste)
+    comparar_normalizacoes(treino)
+    referencias(treino, teste)
     print("\nPronto.")
+
+
+def salvar_regressao(treino, teste):
+    spec = pp.TAREFAS["regressao"]
+    X_tr, categorias = pp.codificar(treino, tarefa="regressao")
+    X_te, _ = pp.codificar(teste, categorias, tarefa="regressao")
+    padr = pp.Padronizador(spec["numericos"]).ajustar(X_tr)
+    Z_tr, Z_te = padr.transformar(X_tr), padr.transformar(X_te)
+    pd.DataFrame({"media_treino": padr.media, "desvio_treino": padr.desvio}).round(3) \
+        .to_csv(TABELAS / "s2_padronizacao_regressao.csv", encoding="utf-8-sig")
+
+    grupos = {"Numéricos padronizados": spec["numericos"],
+              "Cíclicos (seno/cosseno)": [c for c in X_tr if c.endswith(("_SEN", "_COS"))],
+              "Binário": pp.ATRIBUTOS_BINARIOS}
+    for c in spec["categoricos"]:
+        grupos[f"One-hot de {c}"] = [k for k in X_tr if k.startswith(c + "_")]
+    pd.Series({k: len(v) for k, v in grupos.items()}, name="colunas") \
+        .to_csv(TABELAS / "s2_atributos_regressao.csv", encoding="utf-8-sig")
+
+    for nome, Z, parte in [("regressao_treino", Z_tr, treino), ("regressao_teste", Z_te, teste)]:
+        # alvo em toneladas e sem padronizar, para o erro ser lido em toneladas
+        saida = Z.assign(ANO=parte["ANO"].values, ALVO=parte["PESO_LIQUIDO"].values / 1000)
+        saida.to_csv(DADOS_PROCESSADOS / f"{nome}.csv.gz", index=False,
+                     compression="gzip", float_format="%.5f")
+        print(f"  salvo: data/processed/{nome}.csv.gz  {saida.shape}")
+
+    assert list(Z_tr.columns) == list(Z_te.columns)
+    # nenhum atributo pode ser calculado a partir do alvo
+    assert not any(c.startswith(("PESO_", "CARGA_")) for c in Z_tr.columns)
+
+
+def comparar_normalizacoes(treino):
+    """O que min-max, z-score e padronização robusta fazem com o peso líquido."""
+    x = treino["PESO_LIQUIDO"].astype(float)
+    q1, med, q3 = x.quantile([.25, .5, .75])
+    tecnicas = {
+        "Min-max: (x - min) / (max - min)": (x - x.min()) / (x.max() - x.min()),
+        "Z-score: (x - media) / desvio": (x - x.mean()) / x.std(ddof=0),
+        "Robusta: (x - mediana) / IQR": (x - med) / (q3 - q1),
+    }
+    tab = pd.DataFrame([{"tecnica": n, "minimo": t.min(), "q1": t.quantile(.25),
+                         "q3": t.quantile(.75), "maximo": t.max(),
+                         "largura_50pct_central": t.quantile(.75) - t.quantile(.25)}
+                        for n, t in tecnicas.items()]).round(3)
+    tab.to_csv(TABELAS / "s2_comparacao_normalizacao.csv", index=False, encoding="utf-8-sig")
+    print(tab.to_string())
+
+
+def referencias(treino, teste):
+    """Resultado de quem sempre dá a mesma resposta, em cada tarefa."""
+    classe = treino[pp.ALVO].mode()[0]
+    y = teste[pp.ALVO]
+    acc = (y == classe).mean()
+    f1s = [0 if c != classe else 2 * (y == c).sum() / (len(y) + (y == c).sum())
+           for c in CLASSES_ALVO]
+    media = treino["PESO_LIQUIDO"].mean() / 1000
+    r = teste["PESO_LIQUIDO"] / 1000
+    erro = r - media
+    tab = pd.DataFrame([
+        {"tarefa": "Classificação", "referencia": f"Sempre '{classe}'",
+         "metrica_1": "Acurácia", "valor_1": acc, "metrica_2": "F1 macro", "valor_2": np.mean(f1s)},
+        {"tarefa": "Regressão", "referencia": f"Sempre {media:.2f} t (média do treino)",
+         "metrica_1": "MAE (t)", "valor_1": erro.abs().mean(),
+         "metrica_2": "RMSE (t)", "valor_2": np.sqrt((erro ** 2).mean())},
+    ]).round(4)
+    tab.to_csv(TABELAS / "s2_referencias.csv", index=False, encoding="utf-8-sig")
+    print(tab.to_string())
 
 
 if __name__ == "__main__":
